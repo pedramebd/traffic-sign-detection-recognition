@@ -1,0 +1,68 @@
+# ============================================================
+# Traffic Sign Detection & Recognition — Configuration
+# ============================================================
+
+# Dataset
+data:
+  gtsrb_path: "data/gtsrb/"        # GTSRB classification dataset
+  gtsdb_path: "data/gtsdb/"        # GTSDB detection dataset
+  num_classes: 43
+  val_split: 0.2
+  random_seed: 42
+
+# Preprocessing
+preprocessing:
+  img_size: 48                      # Resize target for classification
+  apply_clahe: true                 # CLAHE contrast enhancement
+  imagenet_mean: [0.485, 0.456, 0.406]
+  imagenet_std: [0.229, 0.224, 0.225]
+
+# Augmentation (training only)
+augmentation:
+  rotation: 15                      # Random rotation degrees
+  translate: [0.1, 0.1]            # Random translation
+  scale: [0.9, 1.1]                # Random scaling
+  brightness: 0.3
+  contrast: 0.3
+  saturation: 0.3
+
+# Classification training
+classification:
+  batch_size: 64
+  num_epochs: 25
+  early_stopping_patience: 5
+  num_workers: 0                    # 0 for Windows compatibility
+
+  baseline_cnn:
+    lr: 0.001
+    weight_decay: 0.0001
+    scheduler_factor: 0.5
+    scheduler_patience: 3
+
+  resnet18:
+    lr_pretrained: 0.0001
+    lr_new: 0.001
+    weight_decay: 0.0001
+    num_epochs: 30
+
+  mobilenetv2:
+    lr_pretrained: 0.0001
+    lr_new: 0.001
+    weight_decay: 0.0001
+    num_epochs: 30
+
+# Detection training (YOLOv8)
+detection:
+  model: "yolov8n.pt"              # YOLOv8 nano pretrained
+  imgsz: 640
+  batch_size: 16
+  num_epochs: 80
+  patience: 15
+  single_class: true                # Detect "traffic_sign" only
+  conf_threshold: 0.25
+
+# Pipeline
+pipeline:
+  detector_weights: "weights/yolov8n_single_class.pt"
+  classifier_weights: "weights/best_baseline_cnn.pth"
+  crop_padding: 0.1                 # 10% padding around detections
