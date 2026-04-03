@@ -128,7 +128,7 @@ traffic-sign-project/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/traffic-sign-detection-recognition.git
+git clone https://github.com/pedramebd/traffic-sign-detection-recognition.git
 cd traffic-sign-detection-recognition
 
 # Install dependencies
@@ -152,14 +152,14 @@ python demo.py --image path/to/dashcam_image.jpg
 
 ```bash
 # See the training notebook for full details
-jupyter notebook notebooks/02_classification.ipynb
+jupyter notebook notebooks/01_eda.ipynb
 ```
 
 ### Train detection model
 
 ```bash
 # See the detection notebook for full details
-jupyter notebook notebooks/03_detection.ipynb
+jupyter notebook notebooks/02_detection.ipynb
 ```
 
 ---
